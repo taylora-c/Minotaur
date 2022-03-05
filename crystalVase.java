@@ -15,6 +15,8 @@ public class crystalVase implements Lock{
             guestQ.lock();
             guestQ.unlock();
         }
+        System.out.println("All guests have visited the crystal vase at least once.");
+
         
     }
 
@@ -34,13 +36,11 @@ public class crystalVase implements Lock{
     }
     public void lock() {
         int slot = tail.getAndIncrement() % size;
-        System.out.println("guest " + slot + "has entered the vase room");
         mySlotIndex.set(slot);
         while (! flag[slot]) {};
     }
     public void unlock() {
         int slot = mySlotIndex.get();
-        System.out.println("guest " + slot + "has exited the vase room");
         flag[slot] = false;
         flag[(slot + 1) % size] = true;
     }
